@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +16,7 @@ import sjzc.hf.miaosha.error.EmBusinessError;
 import sjzc.hf.miaosha.response.CommonReturnType;
 //@ControllerAdvice//(添加这个标签时，可以不使用继承，也可对异常进行处理)
 public class BaseController{
-	
+	public static Logger logger = LoggerFactory.getLogger(BaseController.class);
 	
 	public static final String CONTENT_TYPE="application/x-www-form-urlencoded";
 
@@ -35,7 +37,8 @@ public class BaseController{
 			errorData.put("errorMsg", EmBusinessError.UNKNOWN_ERROR.getErrorMsg());
 		}
 		CommonReturnType commonReturnType=CommonReturnType.creat(errorData,"failure");
-		System.out.println(ex.getMessage());
+		logger.error(errorData.get("errorCode")+":"+errorData.get("errorMsg"));
+//		System.out.println(ex.getMessage());
 		return commonReturnType;
 
 	
