@@ -1,6 +1,5 @@
 package sjzc.hf.miaosha.controller;
 
-import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +14,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +25,8 @@ import sjzc.hf.miaosha.error.EmBusinessError;
 import sjzc.hf.miaosha.model.UserModel;
 import sjzc.hf.miaosha.response.CommonReturnType;
 import sjzc.hf.miaosha.service.UserInfoService;
+import sjzc.hf.miaosha.validator.ValidationResult;
+import sjzc.hf.miaosha.validator.ValidatorImpl;
 
 @RestController
 @RequestMapping("/user")
@@ -71,17 +69,15 @@ public class userContorller extends BaseController {
 	}
 
 	@RequestMapping(value = "/signIn", method = { RequestMethod.POST })
-	public CommonReturnType signIn(@Validated @ModelAttribute UserModel user, BindingResult bindingResult,
+	public CommonReturnType signIn(@ModelAttribute UserModel user,
 			HttpServletRequest request) throws Exception {
-		List<ObjectError> list = bindingResult.getAllErrors();
-		if (list != null && !list.isEmpty()) {
-
-			String errorMsg = null;
-			for (ObjectError error : list) {
-				errorMsg = error.getDefaultMessage() + "//n";
-			}
-			throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, errorMsg);
+		
+		//调用自己封装的校验方法进行校验
+		ValidationResult result=ValidatorImpl.validata(user);
+		if(result.isHasErrors()) {
+			throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, result.getErrorMsg());
 		}
+		
 		String sessionOtpCode = (String) request.getSession().getAttribute(user.getTelphone());
 		if (!sessionOtpCode.equals(user.getOtpCode())) {
 			throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "验证码错误");
