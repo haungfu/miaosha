@@ -41,12 +41,9 @@ public class ShiroConfig {
 		map.put("/static/**", "anon");
 		//注册页面
 		map.put("/signIn.html", "anon");
-		//登录接口
-		map.put("/sys/login", "anon");
-		//注册接口
-		map.put("/sys/signIn", "anon");
-		//发送信息接口
-		map.put("/sys/sendMassage", "anon");
+		//系统接口
+		map.put("/sys/**", "anon");
+
 
 		// 登录
 		shiroFilterFactoryBean.setLoginUrl("/login.html");

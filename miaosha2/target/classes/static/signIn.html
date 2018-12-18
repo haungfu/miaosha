@@ -54,6 +54,15 @@
 					name="checkPassword" id="checkPassword">
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<label class="control-label">邮箱</label>
+			<div>
+				<input class="form-control" type="text" placeholder="邮箱"
+					name="email" id="email">
+			</div>
+		</div>
+		
 		<div class="control-group">
 			<label class="control-label">手机号</label>
 			<div>
@@ -128,7 +137,7 @@
 			var encrptPassword = $("#encrptPassword").val();
 			var checkPassword = $("#checkPassword").val();
 			var otpCode = $("#otpCode").val();
-			
+			var email = $("#email").val();
 			if (telphone == null || telphone == "") {
 				alert("手机号不能为空");
 				return false;
@@ -169,6 +178,10 @@
 				alert("密码有误");
 				return false;
 			}
+			if (email == null || email == "") {
+				alert("邮箱不能为空");
+				return false;
+			}
 			$.ajax({
 				type : "POST",
 				contentType : "application/x-www-form-urlencoded",
@@ -181,11 +194,12 @@
 					"encrptPassword":encrptPassword,
 					"checkPassword":checkPassword,
 					"otpCode":otpCode,
+					"email":email,
 				},
 				//回调函数（后端报200时调用）
 				success : function(data) {
 					if (data.status =="success") {
-						alert("注册成功");
+						alert("注册成功,请通过邮件激活账号");
 					} else {
 						alert("注册失败：" + data.data.errorMsg);
 					}

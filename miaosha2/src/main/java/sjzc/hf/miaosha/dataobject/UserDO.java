@@ -1,28 +1,40 @@
 package sjzc.hf.miaosha.dataobject;
 
+import java.util.Date;
 
-
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class UserDO {
-	
     private Integer id;
-    @NotNull(message="用户名必填")
+    @NotNull(message="用户名不能为空")
     private String name;
-    @NotNull(message="年龄名必填")
+
+    @NotNull(message="性别必选")
     private Boolean gender;
-    @Min(0)
+    
     @Max(150)
-    @NotNull(message="年龄名必填")
+    @Min(0)
     private Integer age;
-    @NotNull(message="手机号名必填")
+
+    @NotNull(message="手机号不能为空")
     private String telphone;
+
+    @NotNull(message="邮箱不能为空")
+    @Email
+    private String email;
 
     private String registerMode;
 
     private String thirdPartyId;
+
+    private String salt;
+
+    private Date createTime;
+
+    private String status;
 
     public Integer getId() {
         return id;
@@ -64,6 +76,14 @@ public class UserDO {
         this.telphone = telphone == null ? null : telphone.trim();
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
     public String getRegisterMode() {
         return registerMode;
     }
@@ -78,5 +98,29 @@ public class UserDO {
 
     public void setThirdPartyId(String thirdPartyId) {
         this.thirdPartyId = thirdPartyId == null ? null : thirdPartyId.trim();
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 }

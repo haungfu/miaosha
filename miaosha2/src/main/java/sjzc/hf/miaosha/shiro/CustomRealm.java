@@ -5,15 +5,19 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import sjzc.hf.miaosha.dao.UserDOMapper;
 import sjzc.hf.miaosha.dao.UserPasswordDOMapper;
 import sjzc.hf.miaosha.dataobject.UserDO;
 import sjzc.hf.miaosha.dataobject.UserPasswordDO;
+import sjzc.hf.miaosha.utils.ShiroUtilsSHA;
 
 public class CustomRealm extends AuthorizingRealm {
 	
@@ -44,9 +48,17 @@ public class CustomRealm extends AuthorizingRealm {
 		//传给认证器认证用户身份
 		// 返回认证信息由父类AuthenticatingRealm进行认证
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
-				user, userPassword.getEncrptPassword(), getName());
+				user, userPassword.getEncrptPassword(), ByteSource.Util.bytes(user.getSalt()),getName());
 
 		return simpleAuthenticationInfo;
 	}
 
+	//用来配置加密方式
+	@Override
+	public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+		HashedCredentialsMatcher shaCredentialsMatcher = new HashedCredentialsMatcher();
+		shaCredentialsMatcher.setHashAlgorithmName(ShiroUtilsSHA.hashAlgorithmName);
+		shaCredentialsMatcher.setHashIterations(ShiroUtilsSHA.hashIterations);
+		super.setCredentialsMatcher(shaCredentialsMatcher);
+	}
 }

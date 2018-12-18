@@ -17,7 +17,7 @@ import sjzc.hf.miaosha.service.UserInfoService;
 @RestController
 @RequestMapping("/user")
 //@CrossOrigin//解决跨域(通过地址项目地址访问，根路径相同无跨域)
-public class userContorller extends BaseController {
+public class UserContorller extends BaseController {
 	@Autowired
 	private UserInfoService userInfoService;
 

@@ -31,14 +31,16 @@ public class BaseController{
 			BusinessException businessException = (BusinessException) ex;
 			errorData.put("errorCode", businessException.getErrorCode());
 			errorData.put("errorMsg", businessException.getErrorMsg());
+			
 		} else {
 			// 如果抛出的不是系统自定义异常则重新构造一个未知错误异常。
 			errorData.put("errorCode", EmBusinessError.UNKNOWN_ERROR.getErrorCode());
 			errorData.put("errorMsg", EmBusinessError.UNKNOWN_ERROR.getErrorMsg());
+			
 		}
 		CommonReturnType commonReturnType=CommonReturnType.creat(errorData,"failure");
-		logger.error(errorData.get("errorCode")+":"+errorData.get("errorMsg"));
-//		System.out.println(ex.getMessage());
+		logger.error(errorData.get("errorCode")+":"+ex.getMessage());
+
 		return commonReturnType;
 
 	

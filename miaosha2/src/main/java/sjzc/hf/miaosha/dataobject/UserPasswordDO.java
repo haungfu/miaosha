@@ -1,7 +1,6 @@
 package sjzc.hf.miaosha.dataobject;
 
 public class UserPasswordDO {
-
     private Integer id;
 
     private String encrptPassword;

@@ -7,11 +7,16 @@
     <result column="gender" jdbcType="BIT" property="gender" />
     <result column="age" jdbcType="INTEGER" property="age" />
     <result column="telphone" jdbcType="VARCHAR" property="telphone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="register_mode" jdbcType="VARCHAR" property="registerMode" />
     <result column="third_party_id" jdbcType="VARCHAR" property="thirdPartyId" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, gender, age, telphone, register_mode, third_party_id
+    id, name, gender, age, telphone, email, register_mode, third_party_id, salt, create_time, 
+    status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -19,23 +24,27 @@
     from user_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
   <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user_info
     where name = #{name,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="sjzc.hf.miaosha.dataobject.UserDO">
     insert into user_info (id, name, gender, 
-      age, telphone, register_mode, 
-      third_party_id)
+      age, telphone, email, 
+      register_mode, third_party_id, salt, 
+      create_time, status)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, 
-      #{age,jdbcType=INTEGER}, #{telphone,jdbcType=VARCHAR}, #{registerMode,jdbcType=VARCHAR}, 
-      #{thirdPartyId,jdbcType=VARCHAR})
+      #{age,jdbcType=INTEGER}, #{telphone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{registerMode,jdbcType=VARCHAR}, #{thirdPartyId,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="sjzc.hf.miaosha.dataobject.UserDO" keyProperty="id" useGeneratedKeys="true">
     insert into user_info
@@ -55,11 +64,23 @@
       <if test="telphone != null">
         telphone,
       </if>
+      <if test="email != null">
+        email,
+      </if>
       <if test="registerMode != null">
         register_mode,
       </if>
       <if test="thirdPartyId != null">
         third_party_id,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -78,11 +99,23 @@
       <if test="telphone != null">
         #{telphone,jdbcType=VARCHAR},
       </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
       <if test="registerMode != null">
         #{registerMode,jdbcType=VARCHAR},
       </if>
       <if test="thirdPartyId != null">
         #{thirdPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -101,11 +134,23 @@
       <if test="telphone != null">
         telphone = #{telphone,jdbcType=VARCHAR},
       </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
       <if test="registerMode != null">
         register_mode = #{registerMode,jdbcType=VARCHAR},
       </if>
       <if test="thirdPartyId != null">
         third_party_id = #{thirdPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -116,8 +161,12 @@
       gender = #{gender,jdbcType=BIT},
       age = #{age,jdbcType=INTEGER},
       telphone = #{telphone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
       register_mode = #{registerMode,jdbcType=VARCHAR},
-      third_party_id = #{thirdPartyId,jdbcType=VARCHAR}
+      third_party_id = #{thirdPartyId,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
