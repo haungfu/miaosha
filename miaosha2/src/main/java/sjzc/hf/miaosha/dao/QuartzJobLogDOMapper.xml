@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sjzc.hf.miaosha.dao.QuartzJobLogDOMapper">
+  <resultMap id="BaseResultMap" type="sjzc.hf.miaosha.dataobject.ScheduleJobLogEntity">
+    <id column="LOG_ID" jdbcType="INTEGER" property="logId" />
+    <result column="JOB_ID" jdbcType="INTEGER" property="jobId" />
+    <result column="BEAN_NAME" jdbcType="VARCHAR" property="beanName" />
+    <result column="METHOD_NAME" jdbcType="VARCHAR" property="methodName" />
+    <result column="PARAMS" jdbcType="VARCHAR" property="params" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="ERROR" jdbcType="VARCHAR" property="error" />
+    <result column="TIMES" jdbcType="INTEGER" property="times" />
+    <result column="HOST_IP" jdbcType="VARCHAR" property="hostIp" />
+    <result column="HOST_NAME" jdbcType="VARCHAR" property="hostName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    LOG_ID, JOB_ID, BEAN_NAME, METHOD_NAME, PARAMS, STATUS, ERROR, TIMES, HOST_IP, HOST_NAME, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from quartz_job_log
+    where LOG_ID = #{logId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from quartz_job_log
+    where LOG_ID = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="sjzc.hf.miaosha.dataobject.ScheduleJobLogEntity">
+    insert into quartz_job_log (LOG_ID, JOB_ID, BEAN_NAME, 
+      METHOD_NAME, PARAMS, STATUS, 
+      ERROR, TIMES, HOST_IP, 
+      HOST_NAME, CREATE_TIME)
+    values (#{logId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER}, #{beanName,jdbcType=VARCHAR}, 
+      #{methodName,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{error,jdbcType=VARCHAR}, #{times,jdbcType=INTEGER}, #{hostIp,jdbcType=VARCHAR}, 
+      #{hostName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="sjzc.hf.miaosha.dataobject.ScheduleJobLogEntity" useGeneratedKeys="true" keyProperty="logId">
+    insert into quartz_job_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="jobId != null">
+        JOB_ID,
+      </if>
+      <if test="beanName != null">
+        BEAN_NAME,
+      </if>
+      <if test="methodName != null">
+        METHOD_NAME,
+      </if>
+      <if test="params != null">
+        PARAMS,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="error != null">
+        ERROR,
+      </if>
+      <if test="times != null">
+        TIMES,
+      </if>
+      <if test="hostIp != null">
+        HOST_IP,
+      </if>
+      <if test="hostName != null">
+        HOST_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null">
+        #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="beanName != null">
+        #{beanName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="error != null">
+        #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="times != null">
+        #{times,jdbcType=INTEGER},
+      </if>
+      <if test="hostIp != null">
+        #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null">
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="sjzc.hf.miaosha.dataobject.ScheduleJobLogEntity">
+    update quartz_job_log
+    <set>
+      <if test="jobId != null">
+        JOB_ID = #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="beanName != null">
+        BEAN_NAME = #{beanName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        METHOD_NAME = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        PARAMS = #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="error != null">
+        ERROR = #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="times != null">
+        TIMES = #{times,jdbcType=INTEGER},
+      </if>
+      <if test="hostIp != null">
+        HOST_IP = #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null">
+        HOST_NAME = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="sjzc.hf.miaosha.dataobject.ScheduleJobLogEntity">
+    update quartz_job_log
+    set JOB_ID = #{jobId,jdbcType=INTEGER},
+      BEAN_NAME = #{beanName,jdbcType=VARCHAR},
+      METHOD_NAME = #{methodName,jdbcType=VARCHAR},
+      PARAMS = #{params,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      ERROR = #{error,jdbcType=VARCHAR},
+      TIMES = #{times,jdbcType=INTEGER},
+      HOST_IP = #{hostIp,jdbcType=VARCHAR},
+      HOST_NAME = #{hostName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where LOG_ID = #{logId,jdbcType=INTEGER}
+  </update>
+  	<select id="queryList" resultType="com.ai.ysm.job.entity.ScheduleJobLogEntity" >
+		select * from quartz_job_log 
+		<where>
+			<if test="jobId != null">
+				and job_id = #{jobId}
+			</if>
+		</where>
+		order by log_id desc 
+		<if test="offset != null and limit != null ">
+		limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(1) from quartz_job_log 
+		<where>
+			<if test="jobId != null">
+				and job_id = #{jobId}
+			</if>
+		</where>
+	</select>
+</mapper>
