@@ -1,14 +1,26 @@
 package sjzc.hf.miaosha.error;
 
-@SuppressWarnings("serial")
-public class BusinessException extends Exception implements CommonError{
+
+public class BusinessException extends RuntimeException implements CommonError{
 
 	
-	private CommonError commonError;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private CommonError commonError=EmBusinessError.SYS_ERROR;
 	
 	public BusinessException(CommonError commonError) {
 		super();
 		this.commonError=commonError;
+		
+	}
+	public BusinessException() {
+		super();
+	}
+	public BusinessException(String errorMsg) {
+		super();
+		this.commonError.setErrorMsg(errorMsg);
 		
 	}
 	

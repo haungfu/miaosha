@@ -27,7 +27,6 @@ import sjzc.hf.miaosha.model.UserModel;
 import sjzc.hf.miaosha.response.CommonReturnType;
 import sjzc.hf.miaosha.service.UserInfoService;
 import sjzc.hf.miaosha.service.impl.ActivationCodeServiceImpl;
-import sjzc.hf.miaosha.validator.ValidationResult;
 import sjzc.hf.miaosha.validator.ValidatorImpl;
 
 @RestController
@@ -119,11 +118,8 @@ public class SysContorller extends BaseController {
 
 		// 调用自己封装的校验方法进行校验
 
-		ValidationResult result = ValidatorImpl.validata(user);
-		if (result.isHasErrors()) {
-			logger.error(result.getErrorMsg());
-			throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, result.getErrorMsg());
-		}
+		ValidatorImpl.validata(user);
+		
 
 		String sessionOtpCode = (String) request.getSession().getAttribute(user.getTelphone());
 		if (!sessionOtpCode.equals(user.getOtpCode())) {

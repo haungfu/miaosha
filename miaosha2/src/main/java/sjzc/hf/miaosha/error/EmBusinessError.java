@@ -9,7 +9,8 @@ public enum EmBusinessError implements CommonError{
 	USER_DISABLE(20005,"该账户已被禁用"),
 
 	USER_EXIST(20002,"用户已存在"),
-	LOGIN_ERROR(20002,"登陆异常")
+	LOGIN_ERROR(20002,"登陆异常"),
+	SYS_ERROR(90000,"系统异常")
 	;
 	private int errorCode;
 	

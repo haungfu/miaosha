@@ -6,16 +6,21 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
+import sjzc.hf.miaosha.error.BusinessException;
+import sjzc.hf.miaosha.error.EmBusinessError;
+
 @Component
 public class ValidatorImpl implements InitializingBean {
-
+	public static Logger logger = LoggerFactory.getLogger(ValidatorImpl.class);
 	private static Validator validator;
 
 	// 该方法用来校验
-	public static ValidationResult validata(Object bean) {
+	public static void validata(Object bean) throws Exception {
 		ValidationResult result = new ValidationResult();
 		// 进行校验
 		Set<ConstraintViolation<Object>> set = validator.validate(bean);
@@ -36,7 +41,10 @@ public class ValidatorImpl implements InitializingBean {
 
 		}
 
-		return result;
+		if (result.isHasErrors()) {
+			logger.error(result.getErrorMsg());
+			throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, result.getErrorMsg());
+		}
 	}
 
 	@Override
