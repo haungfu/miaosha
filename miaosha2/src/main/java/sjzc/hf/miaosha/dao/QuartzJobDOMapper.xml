@@ -158,13 +158,13 @@
 	</delete>
 
 	<select id="queryObject"
-		resultType="com.ai.ysm.job.entity.ScheduleJobEntity">
+		resultType="sjzc.hf.miaosha.dataobject.ScheduleJobEntity">
 		select * from
 		quartz_job where job_id = #{value}
 	</select>
 
 	<select id="queryList"
-		resultType="com.ai.ysm.job.entity.ScheduleJobEntity">
+		resultType="sjzc.hf.miaosha.dataobject.ScheduleJobEntity">
 		select * from quartz_job
 		<where>
 			<if test="beanName != null and beanName.trim() != ''">

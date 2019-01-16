@@ -161,7 +161,7 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where LOG_ID = #{logId,jdbcType=INTEGER}
   </update>
-  	<select id="queryList" resultType="com.ai.ysm.job.entity.ScheduleJobLogEntity" >
+  	<select id="queryList" resultType="sjzc.hf.miaosha.dataobject.ScheduleJobLogEntity" >
 		select * from quartz_job_log 
 		<where>
 			<if test="jobId != null">
